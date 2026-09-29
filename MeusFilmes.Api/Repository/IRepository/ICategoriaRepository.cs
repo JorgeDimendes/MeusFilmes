@@ -1,16 +1,17 @@
 ﻿using MeusFilmes.Api.Models;
+using System.Security.Cryptography;
 
 namespace MeusFilmes.Api.Repository.IRepository
 {
     public interface ICategoriaRepository
     {
-        ICollection<Categoria> GetCategorias();
-        Categoria GetCategoria(int id);
-        bool ExisteCategoria(int id);
-        bool ExisteNomeCategoria(string nome);
-        bool CriarCategoria(Categoria categoria);
-        bool AtualizarCategoria(Categoria categoria);
-        bool DeletarCategoria(Categoria categoria);
-        bool Guardar();
+        Task<ICollection<Categoria>> GetCategorias();
+        Task<Categoria> GetCategoria(int id);
+        Task<bool> ExisteCategoria(int id);
+        Task<bool> ExisteNomeCategoria(string nome);
+        Task CriarCategoria(Categoria categoria);
+        void AtualizarCategoria(Categoria categoria);
+        void DeletarCategoria(Categoria categoria);
+        Task<bool> SalvarAlteracoesAsync();
     }
 }

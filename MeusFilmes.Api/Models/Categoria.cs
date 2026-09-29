@@ -9,6 +9,7 @@ namespace MeusFilmes.Api.Models
 
         [Required]
         public string Nome { get; set; }
-        public DateTime FechaCriacao { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public DateTime DataAlteracao { get; set; }
     }
 }

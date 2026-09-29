@@ -23,7 +23,7 @@ namespace MeusFilmes.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("FechaCriacao")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")

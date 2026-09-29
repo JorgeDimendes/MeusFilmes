@@ -1,6 +1,7 @@
 ﻿using MeusFilmes.Api.Data;
 using MeusFilmes.Api.Models;
 using MeusFilmes.Api.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeusFilmes.Api.Repository
 {
@@ -13,22 +14,22 @@ namespace MeusFilmes.Api.Repository
             _context = context;
         }
 
-        public ICollection<Categoria> GetCategorias()
+        public async Task<ICollection<Categoria>> GetCategorias()
         {
-            return _context.Categorias.OrderBy(c => c.Nome).ToList();
+            return await _context.Categorias.OrderBy(c => c.Nome).ToListAsync();
         }
 
-        public Categoria GetCategoria(int id)
+        public async Task<Categoria> GetCategoria(int id)
         {
-            return _context.Categorias.FirstOrDefault(c => c.Id == id);
+            return await _context.Categorias.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public bool ExisteCategoria(int id)
+        public async Task<bool> ExisteCategoria(int id)
         {
             return _context.Categorias.Any(c => c.Id == id);
         }
 
-        public bool ExisteNomeCategoria(string nome)
+        public async Task<bool> ExisteNomeCategoria(string nome)
         {
             // ToLower() = Transforma todas as letras da string em minúsculas.
             // Trim() = Remove espaços em branco do começo e do final da string.
@@ -36,29 +37,26 @@ namespace MeusFilmes.Api.Repository
             return valor;
         }
 
-        public bool CriarCategoria(Categoria categoria)
+        public async Task CriarCategoria(Categoria categoria)
         {
-            categoria.FechaCriacao = DateTime.Now;
-            _context.Categorias.Add(categoria);
-            return Guardar();
+            categoria.DataCriacao = DateTime.Now;
+            await _context.Categorias.AddAsync(categoria);
         }
 
-        public bool AtualizarCategoria(Categoria categoria)
+        public void AtualizarCategoria(Categoria categoria)
         {
-            categoria.FechaCriacao = DateTime.Now;
+            categoria.DataAlteracao = DateTime.Now;
             _context.Categorias.Update(categoria);
-            return Guardar();
         }
 
-        public bool DeletarCategoria(Categoria categoria)
+        public void DeletarCategoria(Categoria categoria)
         {
             _context.Categorias.Remove(categoria);
-            return Guardar();
         }
 
-        public bool Guardar()
+        public async Task<bool> SalvarAlteracoesAsync()
         {
-            return _context.SaveChanges() >= 0 ? true : false;
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

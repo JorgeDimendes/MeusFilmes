@@ -2,11 +2,11 @@
 using MeusFilmes.Api.Dtos;
 using MeusFilmes.Api.Models;
 
-namespace MeusFilmes.Api.FilmesMapper
+namespace MeusFilmes.Api.ProfileMapper
 {
-    public class FilmesMapper : Profile
+    public class MappingProfile : Profile
     {
-        public FilmesMapper()
+        public MappingProfile()
         {
             CreateMap<Categoria, CategoriaDto>().ReverseMap();
             CreateMap<Categoria, CriarCategoriaDto>().ReverseMap();
