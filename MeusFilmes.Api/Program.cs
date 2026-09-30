@@ -1,9 +1,9 @@
-using AutoMapper;
 using MeusFilmes.Api.Data;
 using MeusFilmes.Api.Repository;
 using MeusFilmes.Api.Repository.IRepository;
 using MeusFilmes.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using static MeusFilmes.Api.Services.CategoriaService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +22,6 @@ builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
-//builder.Services.AddAutoMapper(typeof(FilmesMapper));
-//builder.Services.AddAutoMapper(cfg => { }, typeof(FilmesMapper));
 
 var app = builder.Build();
 

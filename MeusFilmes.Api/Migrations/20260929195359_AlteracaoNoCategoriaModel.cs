@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MeusFilmes.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InicialCategoria : Migration
+    public partial class AlteracaoNoCategoriaModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,8 @@ namespace MeusFilmes.Api.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    FechaCriacao = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DataAlteracao = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

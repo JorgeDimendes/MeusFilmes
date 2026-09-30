@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MeusFilmes.Api.Dtos;
+using MeusFilmes.Api.Dtos.Categoria;
 using MeusFilmes.Api.Models;
 using MeusFilmes.Api.Repository.IRepository;
 using MeusFilmes.Api.Services;
@@ -41,11 +41,24 @@ namespace MeusFilmes.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CategoriaDto>> PutAsync(CriarCategoriaDto categoriaDto)
+        public async Task<ActionResult<CategoriaDto>> PutAsync([FromBody]CriarCategoriaDto categoriaDto)
         {
             var categoria = await _categoriaService.CriarCategoriaAsync(categoriaDto);
-            if (categoria == null) return NotFound("Erro ao criar nova categoria");
-            return CreatedAtAction(nameof(GetById), new { id = categoria.Id }, categoria);
+            if (!categoria.Status)
+            {
+                // Retorna 400 Bad Request quando a regra de negócio falhou
+                return BadRequest(categoria);
+            }
+
+            //if (categoria == null) return NotFound("Erro ao criar nova categoria");
+
+            //return CreatedAtAction(nameof(GetById), new { id = categoria.Id }, categoria);
+
+            return CreatedAtAction(
+            nameof(GetById),
+            new { id = categoria.Dados!.Id },
+            categoria
+            );
         }
 
         [HttpPut("{id}")]

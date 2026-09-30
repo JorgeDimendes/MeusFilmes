@@ -1,4 +1,5 @@
-﻿using MeusFilmes.Api.Dtos;
+﻿using MeusFilmes.Api.Dtos.Categoria;
+using MeusFilmes.Api.Models;
 
 namespace MeusFilmes.Api.Services
 {
@@ -6,7 +7,7 @@ namespace MeusFilmes.Api.Services
     {
         Task<IEnumerable<CategoriaDto>> GetCategoriasAsync();
         Task<CategoriaDto> GetByIdCategoriaAsync(int id);
-        Task<CategoriaDto> CriarCategoriaAsync(CriarCategoriaDto criarCategoriaDto);
+        Task<ResponseModel<CategoriaDto>> CriarCategoriaAsync(CriarCategoriaDto criarCategoriaDto);
         Task<CategoriaDto> AtualizarCategoriaAsync(int id, CriarCategoriaDto atualizarCategoriaDto);
         Task<bool> DeletarCategoriaAsync(int id);
     }

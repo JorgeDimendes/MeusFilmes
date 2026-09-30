@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MeusFilmes.Api.Dtos
+namespace MeusFilmes.Api.Dtos.Categoria
 {
     public class CategoriaDto
     {
@@ -10,6 +10,7 @@ namespace MeusFilmes.Api.Dtos
         [MaxLength(100, ErrorMessage = "Digite de 1 a 100 Caracteres!")]
         public string Nome { get; set; }
 
-        public DateTime FechaCriacao { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public DateTime DataAlteracao { get; set; }
     }
 }

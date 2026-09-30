@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MeusFilmes.Api.Dtos;
+using MeusFilmes.Api.Dtos.Categoria;
 using MeusFilmes.Api.Models;
 using MeusFilmes.Api.Repository.IRepository;
 
@@ -30,14 +30,60 @@ namespace MeusFilmes.Api.Services
             return _mapper.Map<CategoriaDto>(categoria);
         }
 
-        public async Task<CategoriaDto> CriarCategoriaAsync(CriarCategoriaDto criarCategoriaDto)
+        public async Task<ResponseModel<CategoriaDto>> CriarCategoriaAsync(CriarCategoriaDto criarCategoriaDto)
         {
+            ResponseModel<CategoriaDto> response = new ResponseModel<CategoriaDto>();
+
+            try
+            {
+                if (criarCategoriaDto is null)
+                {
+                    response.Mensagem = "Dados da categoria não informados.";
+                    response.Status = false;
+                    return response;
+                }
+
+                // Validação de negócio
+                if (await _repository.ExisteNomeCategoria(criarCategoriaDto.Nome))
+                {
+                    response.Mensagem = $"A categoria '{criarCategoriaDto.Nome}' já existe.";
+                    response.Status = false;
+                    return response;
+                }
+
+                var categoria = _mapper.Map<Categoria>(criarCategoriaDto);
+
+                await _repository.CriarCategoria(categoria);
+                await _repository.SalvarAlteracoesAsync();
+
+                response.Dados = _mapper.Map<CategoriaDto>(categoria);
+                response.Mensagem = "Categoria criada com sucesso.";
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Mensagem = $"Ocorreu um erro ao criar a categoria: {ex.Message}";
+                response.Status = false;
+                return response;
+            }
+            
+            #region FormaSimples
+            /*
+            if (await _repository.ExisteNomeCategoria(criarCategoriaDto.Nome))
+            {
+                throw new ConflictException($"A categoria '{criarCategoriaDto.Nome}' já existe.");
+            }
+
             var categoria = _mapper.Map<Categoria>(criarCategoriaDto);
 
             await _repository.CriarCategoria(categoria);
             await _repository.SalvarAlteracoesAsync();
 
+            var categoriaDto = _mapper.Map<CategoriaDto>(categoria);
             return _mapper.Map<CategoriaDto>(categoria);
+            */
+            #endregion
         }
 
         public async Task<CategoriaDto> AtualizarCategoriaAsync(int id, CriarCategoriaDto atualizarCategoriaDto)
@@ -63,6 +109,13 @@ namespace MeusFilmes.Api.Services
             _repository.DeletarCategoria(categoria);
 
             return await _repository.SalvarAlteracoesAsync();
+        }
+
+        public class ConflictException : Exception
+        {
+            public ConflictException(string message) : base(message)
+            {
+            }
         }
     }
 }

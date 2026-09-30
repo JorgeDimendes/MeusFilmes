@@ -11,20 +11,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeusFilmes.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260220020730_InicialCategoria")]
-    partial class InicialCategoria
+    [Migration("20260929195359_AlteracaoNoCategoriaModel")]
+    partial class AlteracaoNoCategoriaModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.24");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
             modelBuilder.Entity("MeusFilmes.Api.Models.Categoria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("TEXT");

@@ -15,13 +15,16 @@ namespace MeusFilmes.Api.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.24");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
             modelBuilder.Entity("MeusFilmes.Api.Models.Categoria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("TEXT");

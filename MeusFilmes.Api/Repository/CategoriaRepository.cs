@@ -33,7 +33,7 @@ namespace MeusFilmes.Api.Repository
         {
             // ToLower() = Transforma todas as letras da string em minúsculas.
             // Trim() = Remove espaços em branco do começo e do final da string.
-            bool valor = _context.Categorias.Any(c => c.Nome.ToLower().Trim() == nome.ToLower().Trim());
+            bool valor = await _context.Categorias.AnyAsync(c => c.Nome.ToLower().Trim() == nome.ToLower().Trim());
             return valor;
         }
 

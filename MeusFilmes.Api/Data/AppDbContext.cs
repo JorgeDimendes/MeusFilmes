@@ -10,5 +10,13 @@ namespace MeusFilmes.Api.Data
         }
 
         public DbSet<Categoria> Categorias { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Verificar Categoria Duplicada
+            modelBuilder.Entity<Categoria>()
+                .HasIndex(c => c.Nome)
+                .IsUnique();
+        }
     }
 }
